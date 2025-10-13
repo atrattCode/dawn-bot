@@ -1,2 +1,2 @@
 mail:token1
-mail:token2
+mail:token2 
