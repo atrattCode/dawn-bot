@@ -49,12 +49,6 @@ mail:mail_pass2
 - **Refferal code:** in the **ref.txt** file put your refferal code.
 
 
-# Showcase💥
-![image](https://github.com/user-attachments/assets/68379282-2e21-4d48-84e9-c0ab0c0ea3f4)
-
-
-
-
 ## Support🌟
 
 - ***My refferal code : **p77e8ob5*****
