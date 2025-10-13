@@ -7,31 +7,31 @@
  [![Static Badge](https://img.shields.io/badge/Telegram-Channel-Link?style=for-the-badge&logo=Telegram&logoColor=white&logoSize=auto&color=blue)](https://t.me/+pB6j65Kv7cdjZmU0)
 
 # Recommendations before use:
-## ❗❗USE PYTHON 3.10❗❗
-## <sup>Captcha solver required for account register<sup>
-## <sup>If the script still doesnt work try to turn the microsoft defender off<sup>
+- Python 3.10+ is supported
+- Captcha solver required for account register
 
 # Features🦈:
-- **Auto-Farm**
+- **Automated token extractions**
 - **Auto-tasks**
-- **Multithread**
+- **Register accounts**
+- **Multithreading**
 - **Full automation**
-- **Stats of your accounts**
+- **Stats for all of your accounts**
 - **All types of proxy support**
 - **Refferal code support**
 
 # Installation+Run🕸
 ```shell
-git clone https://github.com/blinddumper/Dawn-Bot
+git clone https://github.com/atrattCode/dawn-Bot
 cd Dawn-Bot
 run.bat
 ```
 
 # Set-up⚙
-- **Accounts:** In the **accounts.txt** file put your mail&token in such format:
+- **Accounts:** In the **login_accounts.txt** file put your mail& account password in such format:
 ```shell
-mail:token1
-mail:token2
+mail:acc_pass1
+mail:acc_pass2
 ```
 - **Proxy:** in the **proxy.txt** file put your proxy in such format:
 ```shell
@@ -41,8 +41,8 @@ socks5://username:password:ip:port
 ```
 - **Account Register:** in the **register_accounts.txt** file put your mail&password in such format:
  ```shell
-mail:pass1
-mail:pass2
+mail:mail_pass1
+mail:mail_pass2
 ```
 - **Captcha:** in the **captcha** file put your captcha solver api keys(2captcha or anti captcha).
 
