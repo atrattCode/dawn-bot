@@ -1,8 +1,9 @@
 @echo off
-title DawnBot
+title DawnBot 
     if exist requirements.txt (
 		echo installing wheel for faster installing
 		pip install wheel
+        python bot.py
         echo Installing dependencies...
         pip install -r requirements.txt
         echo. > venv\Lib\site-packages\installed
@@ -14,8 +15,6 @@ title DawnBot
 )
 
 echo Starting the bot...
-python bot.py
-
 echo failed
 pause
 
